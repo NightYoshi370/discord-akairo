@@ -1,12 +1,12 @@
-const AkairoError = require('../../util/AkairoError');
-const AkairoHandler = require('../AkairoHandler');
-const { BuiltInReasons, CommandHandlerEvents } = require('../../util/Constants');
-const { Collection } = require('discord.js');
-const Command = require('./Command');
-const CommandUtil = require('./CommandUtil');
-const Flag = require('./Flag');
-const { deepAssign, flatMap, intoArray, intoCallable, isPromise, prefixCompare } = require('../../util/Util');
-const TypeResolver = require('./arguments/TypeResolver');
+import AkairoError from '../../util/AkairoError';
+import AkairoHandler from '../AkairoHandler';
+import { BuiltInReasons, CommandHandlerEvents } from '../../util/Constants';
+import discord from 'discord.js';
+import Command from './Command';
+import CommandUtil from './CommandUtil';
+import { is } from './Flag';
+import { deepAssign, flatMap, intoArray, intoCallable, isPromise, prefixCompare } from '../../util/Util';
+import TypeResolver from './arguments/TypeResolver';
 
 /**
  * Loads commands and handles messages.
@@ -14,7 +14,7 @@ const TypeResolver = require('./arguments/TypeResolver');
  * @param {CommandHandlerOptions} options - Options.
  * @extends {AkairoHandler}
  */
-class CommandHandler extends AkairoHandler {
+export default class CommandHandler extends AkairoHandler {
     constructor(client, {
         directory,
         classToHandle = Command,
@@ -57,9 +57,9 @@ class CommandHandler extends AkairoHandler {
 
         /**
          * Collecion of command aliases.
-         * @type {Collection<string, string>}
+         * @type {discord.Collection<string, string>}
          */
-        this.aliases = new Collection();
+        this.aliases = new discord.Collection();
 
         /**
          * Regular expression to automatically make command aliases for.
@@ -69,9 +69,9 @@ class CommandHandler extends AkairoHandler {
 
         /**
          * Collection of prefix overwrites to commands.
-         * @type {Collection<string|PrefixSupplier, Set<string>>}
+         * @type {discord.Collection<string|PrefixSupplier, Set<string>>}
          */
-        this.prefixes = new Collection();
+        this.prefixes = new discord.Collection();
 
         /**
          * Whether or not to block self.
@@ -129,15 +129,15 @@ class CommandHandler extends AkairoHandler {
 
         /**
          * Collection of CommandUtils.
-         * @type {Collection<string, CommandUtil>}
+         * @type {discord.Collection<string, CommandUtil>}
          */
-        this.commandUtils = new Collection();
+        this.commandUtils = new discord.Collection();
 
         /**
          * Collection of cooldowns.
-         * @type {Collection<string, CooldownData>}
+         * @type {discord.Collection<string, CooldownData>}
          */
-        this.cooldowns = new Collection();
+        this.cooldowns = new discord.Collection();
 
         /**
          * Default cooldown for commands.
@@ -159,9 +159,9 @@ class CommandHandler extends AkairoHandler {
 
         /**
          * Collection of sets of ongoing argument prompts.
-         * @type {Collection<string, Set<string>>}
+         * @type {discord.Collection<string, Set<string>>}
          */
-        this.prompts = new Collection();
+        this.prompts = new discord.Collection();
 
         /**
          * Default argument options.
@@ -212,7 +212,7 @@ class CommandHandler extends AkairoHandler {
         /**
          * Commands loaded, mapped by ID to Command.
          * @name CommandHandler#modules
-         * @type {Collection<string, Command>}
+         * @type {discord.Collection<string, Command>}
          */
 
         this.setup();
@@ -409,13 +409,13 @@ class CommandHandler extends AkairoHandler {
             if (isPromise(before)) await before;
 
             const args = await command.parse(message, content);
-            if (Flag.is(args, 'cancel')) {
+            if (is(args, 'cancel')) {
                 this.emit(CommandHandlerEvents.COMMAND_CANCELLED, message, command);
                 return true;
-            } else if (Flag.is(args, 'retry')) {
+            } else if (is(args, 'retry')) {
                 this.emit(CommandHandlerEvents.COMMAND_BREAKOUT, message, command, args.message);
                 return this.handle(args.message);
-            } else if (Flag.is(args, 'continue')) {
+            } else if (is(args, 'continue')) {
                 const continueCommand = this.modules.get(args.command);
                 return this.handleDirectCommand(message, args.rest, continueCommand, args.ignore);
             }
@@ -1012,7 +1012,7 @@ class CommandHandler extends AkairoHandler {
      */
 }
 
-module.exports = CommandHandler;
+export default CommandHandler;
 
 /**
  * Emitted when a message is blocked by a pre-message inhibitor.

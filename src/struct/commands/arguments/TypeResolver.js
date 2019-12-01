@@ -1,13 +1,13 @@
-const { ArgumentTypes } = require('../../../util/Constants');
-const { Collection } = require('discord.js');
-const { URL } = require('url');
+import { ArgumentTypes } from '../../../util/Constants';
+import discord from 'discord.js';
+import { URL } from 'url';
 
 /**
  * Type resolver for command arguments.
  * The types are documented under ArgumentType.
  * @param {CommandHandler} handler - The command handler.
  */
-class TypeResolver {
+export default class TypeResolver {
     constructor(handler) {
         /**
          * The Akairo client.
@@ -35,9 +35,9 @@ class TypeResolver {
 
         /**
          * Collection of types.
-         * @type {Collection<string, ArgumentTypeCaster>}
+         * @type {discord.Collection<string, ArgumentTypeCaster>}
          */
-        this.types = new Collection();
+        this.types = new discord.Collection();
 
         this.addBuiltInTypes();
     }
@@ -150,11 +150,11 @@ class TypeResolver {
                 const person = message.channel.type === 'text'
                     ? this.client.util.resolveMember(phrase, message.guild.members)
                     : message.channel.type === 'dm'
-                        ? this.client.util.resolveUser(phrase, new Collection([
+                        ? this.client.util.resolveUser(phrase, new discord.Collection([
                             [message.channel.recipient.id, message.channel.recipient],
                             [this.client.user.id, this.client.user]
                         ]))
-                        : this.client.util.resolveUser(phrase, new Collection([
+                        : this.client.util.resolveUser(phrase, new discord.Collection([
                             [this.client.user.id, this.client.user]
                         ]).concat(message.channel.recipients));
 
@@ -169,11 +169,11 @@ class TypeResolver {
                 const persons = message.channel.type === 'text'
                     ? this.client.util.resolveMembers(phrase, message.guild.members)
                     : message.channel.type === 'dm'
-                        ? this.client.util.resolveUsers(phrase, new Collection([
+                        ? this.client.util.resolveUsers(phrase, new discord.Collection([
                             [message.channel.recipient.id, message.channel.recipient],
                             [this.client.user.id, this.client.user]
                         ]))
-                        : this.client.util.resolveUsers(phrase, new Collection([
+                        : this.client.util.resolveUsers(phrase, new discord.Collection([
                             [this.client.user.id, this.client.user]
                         ]).concat(message.channel.recipients));
 
@@ -465,4 +465,4 @@ class TypeResolver {
     }
 }
 
-module.exports = TypeResolver;
+export default TypeResolver;

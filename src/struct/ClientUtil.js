@@ -1,10 +1,10 @@
-const { Collection, MessageAttachment, MessageEmbed, Permissions } = require('discord.js');
+import discord from 'discord.js';
 
 /**
  * Client utilities to help with common tasks.
  * @param {AkairoClient} client - The client.
  */
-class ClientUtil {
+export default class ClientUtil {
     constructor(client) {
         /**
          * The Akairo client.
@@ -16,7 +16,7 @@ class ClientUtil {
     /**
      * Resolves a user from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, User>} users - Collection of users to find in.
+     * @param {discord.discord.Collection<Snowflake, User>} users - discord.Collection of users to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {User}
@@ -28,10 +28,10 @@ class ClientUtil {
     /**
      * Resolves multiple users from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, User>} users - Collection of users to find in.
+     * @param {discord.Collection<Snowflake, User>} users - discord.Collection of users to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, User>}
+     * @returns {discord.Collection<Snowflake, User>}
      */
     resolveUsers(text, users, caseSensitive = false, wholeWord = false) {
         return users.filter(user => this.checkUser(text, user, caseSensitive, wholeWord));
@@ -69,7 +69,7 @@ class ClientUtil {
     /**
      * Resolves a member from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, GuildMember>} members - Collection of members to find in.
+     * @param {discord.Collection<Snowflake, GuildMember>} members - discord.Collection of members to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {GuildMember}
@@ -81,10 +81,10 @@ class ClientUtil {
     /**
      * Resolves multiple members from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, GuildMember>} members - Collection of members to find in.
+     * @param {discord.Collection<Snowflake, GuildMember>} members - discord.Collection of members to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, GuildMember>}
+     * @returns {discord.Collection<Snowflake, GuildMember>}
      */
     resolveMembers(text, members, caseSensitive = false, wholeWord = false) {
         return members.filter(member => this.checkMember(text, member, caseSensitive, wholeWord));
@@ -125,7 +125,7 @@ class ClientUtil {
     /**
      * Resolves a channel from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Channel>} channels - Collection of channels to find in.
+     * @param {discord.Collection<Snowflake, Channel>} channels - discord.Collection of channels to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {Channel}
@@ -137,10 +137,10 @@ class ClientUtil {
     /**
      * Resolves multiple channels from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Channel>} channels - Collection of channels to find in.
+     * @param {discord.Collection<Snowflake, Channel>} channels - discord.Collection of channels to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, Channel>}
+     * @returns {discord.Collection<Snowflake, Channel>}
      */
     resolveChannels(text, channels, caseSensitive = false, wholeWord = false) {
         return channels.filter(channel => this.checkChannel(text, channel, caseSensitive, wholeWord));
@@ -177,7 +177,7 @@ class ClientUtil {
     /**
      * Resolves a role from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Role>} roles - Collection of roles to find in.
+     * @param {discord.Collection<Snowflake, Role>} roles - discord.Collection of roles to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {Role}
@@ -189,10 +189,10 @@ class ClientUtil {
     /**
      * Resolves multiple roles from a string, such as an ID, a name, or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Role>} roles - Collection of roles to find in.
+     * @param {discord.Collection<Snowflake, Role>} roles - discord.Collection of roles to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, Role>}
+     * @returns {discord.Collection<Snowflake, Role>}
      */
     resolveRoles(text, roles, caseSensitive = false, wholeWord = false) {
         return roles.filter(role => this.checkRole(text, role, caseSensitive, wholeWord));
@@ -229,7 +229,7 @@ class ClientUtil {
     /**
      * Resolves a custom emoji from a string, such as a name or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Emoji>} emojis - Collection of emojis to find in.
+     * @param {discord.Collection<Snowflake, Emoji>} emojis - discord.Collection of emojis to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {Emoji}
@@ -241,10 +241,10 @@ class ClientUtil {
     /**
      * Resolves multiple custom emojis from a string, such as a name or a mention.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Emoji>} emojis - Collection of emojis to find in.
+     * @param {discord.Collection<Snowflake, Emoji>} emojis - discord.Collection of emojis to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, Emoji>}
+     * @returns {discord.Collection<Snowflake, Emoji>}
      */
     resolveEmojis(text, emojis, caseSensitive = false, wholeWord = false) {
         return emojis.filter(emoji => this.checkEmoji(text, emoji, caseSensitive, wholeWord));
@@ -281,7 +281,7 @@ class ClientUtil {
     /**
      * Resolves a guild from a string, such as an ID or a name.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Guild>} guilds - Collection of guilds to find in.
+     * @param {discord.Collection<Snowflake, Guild>} guilds - discord.Collection of guilds to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
      * @returns {Guild}
@@ -293,10 +293,10 @@ class ClientUtil {
     /**
      * Resolves multiple guilds from a string, such as an ID or a name.
      * @param {string} text - Text to resolve.
-     * @param {Collection<Snowflake, Guild>} guilds - Collection of guilds to find in.
+     * @param {discord.Collection<Snowflake, Guild>} guilds - discord.Collection of guilds to find in.
      * @param {boolean} [caseSensitive=false] - Makes finding by name case sensitive.
      * @param {boolean} [wholeWord=false] - Makes finding by name match full word only.
-     * @returns {Collection<Snowflake, Guild>}
+     * @returns {discord.Collection<Snowflake, Guild>}
      */
     resolveGuilds(text, guilds, caseSensitive = false, wholeWord = false) {
         return guilds.filter(guild => this.checkGuild(text, guild, caseSensitive, wholeWord));
@@ -325,7 +325,7 @@ class ClientUtil {
      * @returns {string[]}
      */
     permissionNames() {
-        return Object.keys(Permissions.FLAGS);
+        return Object.keys(discord.Permissions.FLAGS);
     }
 
     /**
@@ -336,8 +336,8 @@ class ClientUtil {
     resolvePermissionNumber(number) {
         const resolved = [];
 
-        for (const key of Object.keys(Permissions.FLAGS)) {
-            if (number & Permissions.FLAGS[key]) resolved.push(key);
+        for (const key of Object.keys(discord.Permissions.FLAGS)) {
+            if (number & discord.Permissions.FLAGS[key]) resolved.push(key);
         }
 
         return resolved;
@@ -374,30 +374,28 @@ class ClientUtil {
     /**
      * Makes a MessageEmbed.
      * @param {Object} [data] - Embed data.
-     * @returns {MessageEmbed}
+     * @returns {discord.MessageEmbed}
      */
     embed(data) {
-        return new MessageEmbed(data);
+        return new discord.MessageEmbed(data);
     }
 
     /**
      * Makes a MessageAttachment.
      * @param {BufferResolvable|Stream} file - The file.
      * @param {string} [name] - The filename.
-     * @returns {MessageAttachment}
+     * @returns {discord.MessageAttachment}
      */
     attachment(file, name) {
-        return new MessageAttachment(file, name);
+        return new discord.MessageAttachment(file, name);
     }
 
     /**
      * Makes a Collection.
      * @param {Iterable} [iterable] - Entries to fill with.
-     * @returns {Collection}
+     * @returns {discord.Collection}
      */
     collection(iterable) {
-        return new Collection(iterable);
+        return new discord.Collection(iterable);
     }
 }
-
-module.exports = ClientUtil;

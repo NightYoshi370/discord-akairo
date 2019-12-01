@@ -1,7 +1,7 @@
-const AkairoError = require('../../util/AkairoError');
-const AkairoHandler = require('../AkairoHandler');
-const Inhibitor = require('./Inhibitor');
-const { isPromise } = require('../../util/Util');
+import AkairoError from '../../util/AkairoError';
+import AkairoHandler from '../AkairoHandler';
+import Inhibitor, { name } from './Inhibitor';
+import { isPromise } from '../../util/Util';
 
 /**
  * Loads inhibitors and checks messages.
@@ -9,7 +9,7 @@ const { isPromise } = require('../../util/Util');
  * @param {AkairoHandlerOptions} options - Options.
  * @extends {AkairoHandler}
  */
-class InhibitorHandler extends AkairoHandler {
+export default class InhibitorHandler extends AkairoHandler {
     constructor(client, {
         directory,
         classToHandle = Inhibitor,
@@ -18,7 +18,7 @@ class InhibitorHandler extends AkairoHandler {
         loadFilter
     } = {}) {
         if (!(classToHandle.prototype instanceof Inhibitor || classToHandle === Inhibitor)) {
-            throw new AkairoError('INVALID_CLASS_TO_HANDLE', classToHandle.name, Inhibitor.name);
+            throw new AkairoError('INVALID_CLASS_TO_HANDLE', classToHandle.name, name);
         }
 
         super(client, {
@@ -139,8 +139,6 @@ class InhibitorHandler extends AkairoHandler {
      * @returns {InhibitorHandler}
      */
 }
-
-module.exports = InhibitorHandler;
 
 /**
  * Emitted when an inhibitor is loaded.

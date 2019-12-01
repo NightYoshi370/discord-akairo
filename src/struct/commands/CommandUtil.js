@@ -1,11 +1,11 @@
-const { APIMessage, Collection } = require('discord.js');
+import discord from 'discord.js';
 
 /**
  * Command utilies.
  * @param {CommandHandler} handler - The command handler.
  * @param {Message} message - Message that triggered the command.
  */
-class CommandUtil {
+export default class CommandUtil {
     constructor(handler, message) {
         /**
          * The command handler.
@@ -40,9 +40,9 @@ class CommandUtil {
         if (this.handler.storeMessages) {
             /**
              * Messages stored from prompts and prompt replies.
-             * @type {Collection<Snowflake, Message>}
+             * @type {discord.Collection<Snowflake, Message>}
              */
-            this.messages = new Collection();
+            this.messages = new discord.Collection();
         } else {
             this.messages = null;
         }
@@ -154,14 +154,14 @@ class CommandUtil {
      * @returns {MessageOptions}
      */
     static transformOptions(content, options, extra) {
-        const transformedOptions = APIMessage.transformOptions(content, options, extra);
+        const transformedOptions = discord.APIMessage.transformOptions(content, options, extra);
         if (!transformedOptions.content) transformedOptions.content = null;
         if (!transformedOptions.embed) transformedOptions.embed = null;
         return transformedOptions;
     }
 }
 
-module.exports = CommandUtil;
+export default CommandUtil;
 
 /**
  * Extra properties applied to the Discord.js message object.

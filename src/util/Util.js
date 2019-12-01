@@ -1,4 +1,4 @@
-class Util {
+export default class Util {
     static isPromise(value) {
         return value
         && typeof value.then === 'function'
@@ -74,5 +74,3 @@ class Util {
         return null;
     }
 }
-
-module.exports = Util;

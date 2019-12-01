@@ -1,4 +1,4 @@
-const Provider = require('./Provider');
+import Provider from './Provider';
 
 /**
  * Provider using the `sqlite` library.
@@ -7,7 +7,7 @@ const Provider = require('./Provider');
  * @param {ProviderOptions} [options={}] - Options to use.
  * @extends {Provider}
  */
-class SQLiteProvider extends Provider {
+export default class SQLiteProvider extends Provider {
     constructor(db, tableName, { idColumn = 'id', dataColumn } = {}) {
         super();
 
@@ -130,5 +130,3 @@ class SQLiteProvider extends Provider {
         return this.db.run(`DELETE FROM ${this.tableName} WHERE ${this.idColumn} = $id`, { $id: id });
     }
 }
-
-module.exports = SQLiteProvider;

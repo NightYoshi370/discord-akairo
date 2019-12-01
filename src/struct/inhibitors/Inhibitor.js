@@ -1,5 +1,5 @@
-const AkairoError = require('../../util/AkairoError');
-const AkairoModule = require('../AkairoModule');
+import AkairoError from '../../util/AkairoError';
+import AkairoModule from '../AkairoModule';
 
 /**
  * Represents an inhibitor.
@@ -7,7 +7,7 @@ const AkairoModule = require('../AkairoModule');
  * @param {InhibitorOptions} [options={}] - Options for the inhibitor.
  * @extends {AkairoModule}
  */
-class Inhibitor extends AkairoModule {
+export default class Inhibitor extends AkairoModule {
     constructor(id, {
         category,
         reason = '',
@@ -74,8 +74,6 @@ class Inhibitor extends AkairoModule {
      * @returns {Inhibitor}
      */
 }
-
-module.exports = Inhibitor;
 
 /**
  * Options to use for inhibitor execution behavior.

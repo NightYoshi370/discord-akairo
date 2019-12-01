@@ -1,14 +1,14 @@
-const AkairoError = require('../../../util/AkairoError');
-const Argument = require('./Argument');
-const { ArgumentMatches } = require('../../../util/Constants');
-const Flag = require('../Flag');
+import AkairoError from '../../../util/AkairoError';
+import Argument from './Argument';
+import { ArgumentMatches } from '../../../util/Constants';
+import { is } from '../Flag';
 
 /**
  * Runs arguments.
  * @param {Command} command - Command to run for.
  * @private
  */
-class ArgumentRunner {
+export default class ArgumentRunner {
     constructor(command) {
         this.command = command;
     }
@@ -44,7 +44,7 @@ class ArgumentRunner {
         };
 
         const augmentRest = val => {
-            if (Flag.is(val, 'continue')) {
+            if (is(val, 'continue')) {
                 val.rest = parsed.all.slice(state.index).map(x => x.raw).join('');
             }
         };
@@ -339,7 +339,7 @@ class ArgumentRunner {
      * @returns {boolean}
      */
     static isShortCircuit(value) {
-        return Flag.is(value, 'cancel') || Flag.is(value, 'retry') || Flag.is(value, 'continue');
+        return is(value, 'cancel') || is(value, 'retry') || is(value, 'continue');
     }
 
     /**
@@ -358,8 +358,6 @@ class ArgumentRunner {
         };
     }
 }
-
-module.exports = ArgumentRunner;
 
 /**
  * State for the argument runner.

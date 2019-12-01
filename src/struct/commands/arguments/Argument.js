@@ -1,13 +1,13 @@
-const { ArgumentMatches, ArgumentTypes } = require('../../../util/Constants');
-const Flag = require('../Flag');
-const { choice, intoCallable, isPromise } = require('../../../util/Util');
+import { ArgumentMatches, ArgumentTypes } from '../../../util/Constants';
+import { cancel as _cancel, retry as _retry, fail, is } from '../Flag';
+import { choice, intoCallable, isPromise } from '../../../util/Util';
 
 /**
  * Represents an argument for a command.
  * @param {Command} command - Command of the argument.
  * @param {ArgumentOptions} options - Options for the argument.
  */
-class Argument {
+export default class Argument {
     constructor(command, {
         match = ArgumentMatches.PHRASE,
         type = ArgumentTypes.STRING,
@@ -155,7 +155,7 @@ class Argument {
                 if (message.util) message.util.addMessage(sent);
             }
 
-            return Flag.cancel();
+            return _cancel();
         };
 
         if (!phrase && optional) {
@@ -284,12 +284,12 @@ class Argument {
                     if (message.util) message.util.addMessage(sentTimeout);
                 }
 
-                return Flag.cancel();
+                return _cancel();
             }
 
             if (promptOptions.breakout) {
                 const looksLike = await this.handler.parseCommand(input);
-                if (looksLike && looksLike.command) return Flag.retry(input);
+                if (looksLike && looksLike.command) return _retry(input);
             }
 
             if (input.content.toLowerCase() === promptOptions.cancelWord.toLowerCase()) {
@@ -299,7 +299,7 @@ class Argument {
                     if (message.util) message.util.addMessage(sentCancel);
                 }
 
-                return Flag.cancel();
+                return _cancel();
             }
 
             if (isInfinite && input.content.toLowerCase() === promptOptions.stopWord.toLowerCase()) {
@@ -319,7 +319,7 @@ class Argument {
                     if (message.util) message.util.addMessage(sentEnded);
                 }
 
-                return Flag.cancel();
+                return _cancel();
             }
 
             if (isInfinite) {
@@ -525,7 +525,7 @@ class Argument {
             if (typeof type === 'function') type = type.bind(this);
             const res = await Argument.cast(type, this.handler.resolver, message, phrase);
             if (Argument.isFailure(res)) {
-                return Flag.fail({ input: phrase, value: res });
+                return fail({ input: phrase, value: res });
             }
 
             return { input: phrase, value: res };
@@ -545,7 +545,7 @@ class Argument {
             if (typeof type === 'function') type = type.bind(this);
             const res = await Argument.cast(type, this.handler.resolver, message, phrase);
             if (Argument.isFailure(res)) {
-                return Flag.fail({ tag, value: res });
+                return fail({ tag, value: res });
             }
 
             return { tag, value: res };
@@ -565,7 +565,7 @@ class Argument {
             if (typeof type === 'function') type = type.bind(this);
             const res = await Argument.cast(type, this.handler.resolver, message, phrase);
             if (Argument.isFailure(res)) {
-                return Flag.fail({ tag, input: phrase, value: res });
+                return fail({ tag, input: phrase, value: res });
             }
 
             return { tag, input: phrase, value: res };
@@ -598,11 +598,9 @@ class Argument {
      * @returns {boolean}
      */
     static isFailure(value) {
-        return value == null || Flag.is(value, 'fail');
+        return value == null || is(value, 'fail');
     }
 }
-
-module.exports = Argument;
 
 /**
  * Options for how an argument parses text.

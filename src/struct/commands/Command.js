@@ -1,8 +1,8 @@
-const AkairoError = require('../../util/AkairoError');
-const AkairoModule = require('../AkairoModule');
-const Argument = require('./arguments/Argument');
-const ArgumentRunner = require('./arguments/ArgumentRunner');
-const ContentParser = require('./ContentParser');
+import AkairoError from '../../util/AkairoError';
+import AkairoModule from '../AkairoModule';
+import Argument from './arguments/Argument';
+import ArgumentRunner, { fromArguments } from './arguments/ArgumentRunner';
+import ContentParser, { getFlags } from './ContentParser';
 
 /**
  * Represents a command.
@@ -10,7 +10,7 @@ const ContentParser = require('./ContentParser');
  * @param {CommandOptions} [options={}] - Options for the command.
  * @extends {AkairoModule}
  */
-class Command extends AkairoModule {
+export default class Command extends AkairoModule {
     constructor(id, options = {}) {
         super(id, { category: options.category });
 
@@ -47,7 +47,7 @@ class Command extends AkairoModule {
         this.aliases = aliases;
 
         const { flagWords, optionFlagWords } = Array.isArray(args)
-            ? ContentParser.getFlags(args)
+            ? getFlags(args)
             : { flagWords: flags, optionFlagWords: optionFlags };
 
         this.contentParser = new ContentParser({
@@ -59,7 +59,7 @@ class Command extends AkairoModule {
 
         this.argumentRunner = new ArgumentRunner(this);
         this.argumentGenerator = Array.isArray(args)
-            ? ArgumentRunner.fromArguments(args.map(arg => [arg.id, new Argument(this, arg)]))
+            ? fromArguments(args.map(arg => [arg.id, new Argument(this, arg)]))
             : args.bind(this);
 
         /**
@@ -233,8 +233,6 @@ class Command extends AkairoModule {
      * @returns {Command}
      */
 }
-
-module.exports = Command;
 
 /**
  * Options to use for command execution behavior.

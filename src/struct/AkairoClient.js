@@ -1,5 +1,5 @@
-const { Client } = require('discord.js');
-const ClientUtil = require('./ClientUtil');
+import discord from 'discord.js';
+import ClientUtil from './ClientUtil';
 
 /**
  * The Akairo framework client.
@@ -8,7 +8,7 @@ const ClientUtil = require('./ClientUtil');
  * @param {ClientOptions} [clientOptions] - Options for Discord JS client.
  * If not specified, the previous options parameter is used instead.
  */
-class AkairoClient extends Client {
+export default class AkairoClient extends discord.Client {
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
 
@@ -39,8 +39,6 @@ class AkairoClient extends Client {
             : id === this.ownerID;
     }
 }
-
-module.exports = AkairoClient;
 
 /**
  * Options for the client.

@@ -3,7 +3,7 @@
  * @param {string} id - ID of module.
  * @param {AkairoModuleOptions} [options={}] - Options.
  */
-class AkairoModule {
+export default class AkairoModule {
     constructor(id, { category = 'default' } = {}) {
         /**
          * ID of the module.
@@ -66,8 +66,6 @@ class AkairoModule {
         return this.id;
     }
 }
-
-module.exports = AkairoModule;
 
 /**
  * Options for module.

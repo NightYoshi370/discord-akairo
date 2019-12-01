@@ -1,12 +1,12 @@
-const { Collection } = require('discord.js');
+import discord from 'discord.js';
 
 /**
  * A group of modules.
  * @param {string} id - ID of the category.
  * @param {Iterable} [iterable] - Entries to set.
- * @extends {Collection}
+ * @extends {discord.Collection}
  */
-class Category extends Collection {
+export default class Category extends discord.Collection {
     constructor(id, iterable) {
         super(iterable);
 
@@ -49,5 +49,3 @@ class Category extends Collection {
         return this.id;
     }
 }
-
-module.exports = Category;

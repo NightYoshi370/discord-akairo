@@ -1,4 +1,4 @@
-const { ArgumentMatches } = require('../../util/Constants');
+import { ArgumentMatches } from '../../util/Constants';
 
 /*
  * Grammar:
@@ -484,7 +484,7 @@ class ContentParser {
     }
 }
 
-module.exports = ContentParser;
+export default ContentParser;
 
 /**
  * Options for the content parser.

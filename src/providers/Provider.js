@@ -1,5 +1,5 @@
-const AkairoError = require('../util/AkairoError');
-const { Collection } = require('discord.js');
+import AkairoError from '../util/AkairoError';
+import discord from 'discord.js';
 
 /**
  * A provider for key-value storage.
@@ -9,9 +9,9 @@ class Provider {
     constructor() {
         /**
          * Cached entries.
-         * @type {Collection<string, Object>}
+         * @type {discord.Collection<string, Object>}
          */
-        this.items = new Collection();
+        this.items = new discord.Collection();
     }
 
     /**
@@ -69,7 +69,7 @@ class Provider {
     }
 }
 
-module.exports = Provider;
+export default Provider;
 
 /**
  * Options to use for providers.

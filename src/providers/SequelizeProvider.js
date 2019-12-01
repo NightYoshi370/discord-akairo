@@ -1,4 +1,4 @@
-const Provider = require('./Provider');
+import Provider from './Provider';
 
 /**
  * Provider using the `sequelize` library.
@@ -6,7 +6,7 @@ const Provider = require('./Provider');
  * @param {ProviderOptions} [options={}] - Options to use.
  * @extends {Provider}
  */
-class SequelizeProvider extends Provider {
+export default class SequelizeProvider extends Provider {
     constructor(table, { idColumn = 'id', dataColumn } = {}) {
         super();
 
@@ -114,5 +114,3 @@ class SequelizeProvider extends Provider {
         return this.table.destroy({ where: { [this.idColumn]: id } });
     }
 }
-
-module.exports = SequelizeProvider;
